@@ -1,0 +1,46 @@
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin container() {
+  width: 280px;
+  margin: 0 auto;
+  
+  @media ($tablet-widths) {
+    width: 620px;
+  }
+  
+  @media ($desktop-widths) {
+    width: 940px;
+  }
+}  
+
+@mixin container-fluid() {
+  width: 88%;
+  margin: 0 auto;
+  max-width: 940px;
+}
+
+@mixin btn() {
+  display: inline-block;
+  padding: 15px 35px;
+  font-family: $font-family;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  text-decoration: none;
+  vertical-align: top;
+  text-align: center;
+  color: $black;
+  background-color: transparent;
+  border-radius: 1px solid $black;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+
