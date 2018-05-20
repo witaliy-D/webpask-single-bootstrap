@@ -66,19 +66,27 @@
           },
 
             {
-              test: /\.svg$/,
-              loader: "svg-url-loader",
-            },
-
-            {
-              test: /\.(woff|woff2|eot|ttf|otf)$/,
+              test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
               use: [
                       {
-                        loader: "file-loader",
-                          options: {
+                        loader: 'file-loader',
+                        options: {
                           name: "[path][name].[ext]",
                         },
                       }
+              ],
+            },
+
+            {
+              test: /\.(woff|woff2|svg|ttf|otf)(\?v=\d+\.\d+\.\d+)?$/,
+              use: [
+                      {
+                        loader: "url-loader",
+                        options: {
+                          name: "[path][name].[ext]",
+                          limit: 50000
+                        },
+                      },
               ],
             },
 
