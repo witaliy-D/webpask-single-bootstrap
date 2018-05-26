@@ -84,7 +84,7 @@
                         loader: "url-loader",
                         options: {
                           name: "[path][name].[ext]",
-                          limit: 50000
+                          limit: 10000
                         },
                       },
               ],
