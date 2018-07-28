@@ -9,7 +9,7 @@ const path = require("path"),
 
 
 module.exports = {
-
+    devtool: 'source-map',
     context: path.resolve(__dirname, "src"),
 
     entry: {
@@ -31,7 +31,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: ['env', 'react', 'stage-0']
+                        presets: ['env', 'stage-0', 'react', 'react-hmre']
                     }
                 }
             },
