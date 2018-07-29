@@ -31,7 +31,8 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        presets: ['env', 'stage-0', 'react', 'react-hmre']
+                        //presets: ['env', 'stage-0', 'react', 'react-hmre'] //hot-reload
+                        presets: ['env', 'stage-0', 'react']
                     }
                 }
             },
@@ -53,10 +54,10 @@ module.exports = {
 
             {
                 test: /\.css$/,
-                use: [{
-                    loader: "css-loader",
-                    options: {minimize: true}
-                }]
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader"
+                ]
             },
 
             {
@@ -109,12 +110,14 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery",
             jquery: "jquery",
+            'window.jQuery': 'jquery',
+            'window.$': 'jquery',
             Popper: ["popper.js", "default"]
         }),
 
         new HtmlWebPackPlugin({
-            template: "index.html",
-            filename: "./index.html"
+            template: "./index.html",
+            filename: "index.html"
         }),
 
         new CleanWebpackPlugin(["dist"]),
@@ -125,7 +128,8 @@ module.exports = {
             ],
             {
                 ignore: [
-                    {glob: "svg/*"}
+                    {glob: "sprite/*"},
+                    {glob: "symbols/*"}
                 ]
             }
         ),

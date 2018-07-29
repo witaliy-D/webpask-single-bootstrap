@@ -1,19 +1,22 @@
-import style from "../scss/style.scss";
+//import "normalize.css"
 import "bootstrap";
-
-
-import hello from './hello';
-
-$(document).ready
-	(function(){
-		hello();
-	
-});
-
 
 import React from 'react'
 import {render} from 'react-dom'
 import Articles from './components/Articles'
+
+import hello from './hello';
+
+import "../scss/style.scss";
+
+$(document).ready
+	(function(){
+		hello();
+
+});
+
+
+
 
 
 render(
