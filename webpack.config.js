@@ -1,26 +1,29 @@
-const path = require("path"),
-      webpack = require("webpack"),
-      HtmlWebPackPlugin = require("html-webpack-plugin"),
-      CleanWebpackPlugin = require("clean-webpack-plugin"),
-      MiniCssExtractPlugin = require("mini-css-extract-plugin"),
-      OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin"),
-      CopyWebpackPlugin = require("copy-webpack-plugin"),
-      ImageminPlugin = require("imagemin-webpack-plugin").default;
+const path = require("path");
+const webpack = require("webpack");
+
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+
 
 
 module.exports = {
-    devtool: 'source-map',
+    //devtool: 'source-map',
     context: path.resolve(__dirname, "src"),
 
     entry: {
         app: [
-            "./js/app.js"
-        ]
+            "./js/app.js",
+        ],
     },
 
     output: {
         filename: "script.js",
-        path: path.resolve(__dirname, "dist")
+        path: path.resolve(__dirname, "dist"),
     },
 
     module: {
@@ -31,7 +34,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     query: {
-                        //presets: ['env', 'stage-0', 'react', 'react-hmre'] //hot-reload
+                        //presets: ['env', 'stage-0', 'react', 'react-hmre']
                         presets: ['env', 'stage-0', 'react']
                     }
                 }
@@ -61,23 +64,8 @@ module.exports = {
             },
 
             {
-                test: /\.(png|jpe?g|gif)$/,
-                use: [
-                    {
-                        loader: "url-loader",
-                        options: {
-                            name: "[path][name].[ext]",
-                            limit: 10000
-                        }
-                    },
-                    {
-                        loader: "img-loader"
-                    }
-                ]
-            },
-
-            {
-                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+                exclude: [/svg-inline/, /symbols/],
                 use: [
                     {
                         loader: 'file-loader',
@@ -89,7 +77,29 @@ module.exports = {
             },
 
             {
-                test: /\.(woff|woff2|svg|ttf|otf)(\?v=\d+\.\d+\.\d+)?$/,
+                test: /svg-inline/,
+                use: [
+                    'svg-sprite-loader',
+                    'svgo-loader'
+                ]
+            },
+
+            {
+                test: /symbols/,
+                use: [
+                    {
+                        loader: 'svg-sprite-loader',
+                        options: {
+                            extract: true,
+                            spriteFilename: './img/symbols.svg'
+                        }
+                    },
+                    'svgo-loader'
+                ]
+            },
+
+            {
+                test: /\.(png|jpe?g|gif)$/,
                 use: [
                     {
                         loader: "url-loader",
@@ -97,10 +107,10 @@ module.exports = {
                             name: "[path][name].[ext]",
                             limit: 10000
                         }
-                    }
+                    },
+                    "img-loader"
                 ]
             }
-
         ]
     },
 
@@ -112,12 +122,17 @@ module.exports = {
             jquery: "jquery",
             'window.jQuery': 'jquery',
             'window.$': 'jquery',
-            Popper: ["popper.js", "default"]
+            Popper: ["popper.js", "default"],
+            svg4everybody: 'svg4everybody'
         }),
 
         new HtmlWebPackPlugin({
             template: "./index.html",
             filename: "index.html"
+        }),
+
+        new SpriteLoaderPlugin ({
+            plainSprite: true,
         }),
 
         new CleanWebpackPlugin(["dist"]),
@@ -129,7 +144,8 @@ module.exports = {
             {
                 ignore: [
                     {glob: "sprite/*"},
-                    {glob: "symbols/*"}
+                    {glob: "symbols/*"},
+                    {glob: "svg-inline/*"}
                 ]
             }
         ),
@@ -142,9 +158,25 @@ module.exports = {
         new OptimizeCSSAssetsPlugin(),
 
         new ImageminPlugin({
-            test: /\.(jpe?g|png|gif|svg)$/i
-        })
+            test: /\.(jpe?g|png|gif)$/i,
+            jpegtran:({progressive: true}),
+            pngquant:({})
+        }),
 
+        new ImageminPlugin({
+            test: /bg-svg\/.*\.svg$/,
+            svgo: ({}),
+        }),
+
+        new ImageminPlugin({
+            test: /svg\/.*\.svg$/,
+            svgo: ({
+                plugins: [
+                    {removeViewBox: false},
+                    {removeDimensions: true}
+                ]
+            })
+        }),
     ]
 };
 

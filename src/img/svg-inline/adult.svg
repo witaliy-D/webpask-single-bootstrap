@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>9599C3D2-E553-457B-9F54-A6D3C2BEA908</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Extra-Small-Devices:-Phones-(&lt;768px)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Account_Extra-Small-Devices:-Phones" transform="translate(-130.000000, -98.000000)">
+            <g id="Group-14" transform="translate(75.000000, 98.000000)">
+                <g id="Group-3">
+                    <g id="Pic/Adult" transform="translate(55.000000, 0.000000)">
+                        <circle id="Oval" fill="#E3E4E9" cx="30" cy="30" r="30"></circle>
+                        <g id="ic_account_circle_black_24px" stroke-width="1" transform="translate(-6.000000, -6.000000)">
+                            <path d="M36,6 C19.44,6 6,19.44 6,36 C6,52.56 19.44,66 36,66 C52.56,66 66,52.56 66,36 C66,19.44 52.56,6 36,6 Z" id="Shape" fill="#E3E4E9" fill-rule="nonzero"></path>
+                            <polygon id="Shape" points="0 0 72 0 72 72 0 72"></polygon>
+                        </g>
+                        <path d="M30,9 C34.98,9 39,13.02 39,18 C39,22.98 34.98,27 30,27 C25.02,27 21,22.98 21,18 C21,13.02 25.02,9 30,9 Z" id="Path" fill="#FFFFFF"></path>
+                        <path d="M30,51.6 C22.5,51.6 15.87,47.76 12,41.94 C12.09,35.97 24,32.7 30,32.7 C35.97,32.7 47.91,35.97 48,41.94 C44.13,47.76 37.5,51.6 30,51.6 Z" id="Path" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
