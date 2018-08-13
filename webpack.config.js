@@ -17,13 +17,13 @@ module.exports = {
 
     entry: {
         app: [
-            "./js/app.js",
-        ],
+            "./js/app.js"
+        ]
     },
 
     output: {
         filename: "script.js",
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "dist")
     },
 
     module: {
@@ -132,7 +132,7 @@ module.exports = {
         }),
 
         new SpriteLoaderPlugin ({
-            plainSprite: true,
+            plainSprite: true
         }),
 
         new CleanWebpackPlugin(["dist"]),
@@ -143,7 +143,6 @@ module.exports = {
             ],
             {
                 ignore: [
-                    {glob: "sprite/*"},
                     {glob: "symbols/*"},
                     {glob: "svg-inline/*"}
                 ]
@@ -164,19 +163,19 @@ module.exports = {
         }),
 
         new ImageminPlugin({
-            test: /bg-svg\/.*\.svg$/,
-            svgo: ({}),
+            test: 'img/bg-svg/*.svg',
+            svgo: ({})
         }),
 
         new ImageminPlugin({
-            test: /svg\/.*\.svg$/,
+            test: 'img/*.svg',
             svgo: ({
                 plugins: [
                     {removeViewBox: false},
                     {removeDimensions: true}
                 ]
             })
-        }),
+        })
     ]
 };
 

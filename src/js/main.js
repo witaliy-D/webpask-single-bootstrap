@@ -3,7 +3,7 @@ function requireAll(r) {
 }
 
 requireAll(require.context('../img/symbols/', true, /\.svg$/));
-requireAll(require.context('../img/svg-inline/', true, /\.svg$/));
+//requireAll(require.context('../img/svg-inline/', true, /\.svg$/));
 
 
 
