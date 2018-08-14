@@ -5,7 +5,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
@@ -126,28 +125,11 @@ module.exports = {
             svg4everybody: 'svg4everybody'
         }),
 
-        new HtmlWebPackPlugin({
-            template: "./index.html",
-            filename: "index.html"
-        }),
-
         new SpriteLoaderPlugin ({
             plainSprite: true
         }),
 
         new CleanWebpackPlugin(["dist"]),
-
-        new CopyWebpackPlugin(
-            [
-                {from: "./img", to: "img"}
-            ],
-            {
-                ignore: [
-                    {glob: "symbols/*"},
-                    {glob: "svg-inline/*"}
-                ]
-            }
-        ),
 
         new MiniCssExtractPlugin({
             filename: "style.min.css",
@@ -156,26 +138,12 @@ module.exports = {
 
         new OptimizeCSSAssetsPlugin(),
 
-        new ImageminPlugin({
-            test: /\.(jpe?g|png|gif)$/i,
-            jpegtran:({progressive: true}),
-            pngquant:({})
-        }),
+        new ImageminPlugin(),
 
-        new ImageminPlugin({
-            test: 'img/bg-svg/*.svg',
-            svgo: ({})
+        new HtmlWebPackPlugin({
+            template: "./index.html",
+            filename: "index.html"
         }),
-
-        new ImageminPlugin({
-            test: 'img/*.svg',
-            svgo: ({
-                plugins: [
-                    {removeViewBox: false},
-                    {removeDimensions: true}
-                ]
-            })
-        })
     ]
 };
 
