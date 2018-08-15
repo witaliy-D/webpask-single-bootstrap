@@ -1,12 +1,22 @@
 const path = require("path");
 const webpack = require("webpack");
-
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+
+
+const fs = require('fs');
+const Assets = fs.readdirSync(path.resolve(__dirname, 'src'));
+const Pages = Assets.filter(path => path.endsWith('.html'));
+const generateHtmlPlugins = Pages.map(function(page) {
+    return new HtmlWebPackPlugin({
+        filename: page,
+        template: page
+    })
+});
 
 
 
@@ -41,7 +51,11 @@ module.exports = {
 
             {
                 test: /\.html$/,
-                use: [{loader: "html-loader", options: {minimize: true}}]
+                use: [
+                    {
+                        loader: "html-loader",
+                    }
+                ]
             },
 
             {
@@ -140,11 +154,7 @@ module.exports = {
 
         new ImageminPlugin(),
 
-        new HtmlWebPackPlugin({
-            template: "./index.html",
-            filename: "index.html"
-        }),
-    ]
+    ].concat(generateHtmlPlugins)
 };
 
 
