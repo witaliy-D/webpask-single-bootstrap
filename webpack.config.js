@@ -14,10 +14,10 @@ const Pages = Assets.filter(path => path.endsWith('.html'));
 const generateHtmlPlugins = Pages.map(function(page) {
     return new HtmlWebPackPlugin({
         filename: page,
-        template: page
+        template: page,
+        hash: true,
     })
 });
-
 
 
 module.exports = {
@@ -31,8 +31,17 @@ module.exports = {
     },
 
     output: {
-        filename: "script.js",
-        path: path.resolve(__dirname, "dist")
+        filename: "[name].js",
+        path: path.resolve(__dirname, "dist"),
+    },
+
+    devServer: {
+        contentBase: [
+            path.resolve(__dirname, "src"),
+            'src/img',
+            'src/img/symbols'
+        ],
+        watchContentBase: true,
     },
 
     module: {
@@ -54,13 +63,14 @@ module.exports = {
                 use: [
                     {
                         loader: "html-loader",
-                    }
+                    },
                 ]
             },
 
             {
                 test: /\.scss$/,
                 use: [
+                    'css-hot-loader',
                     MiniCssExtractPlugin.loader,
                     "css-loader",
                     "postcss-loader",
@@ -71,6 +81,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
+                    'css-hot-loader',
                     MiniCssExtractPlugin.loader,
                     "css-loader"
                 ]
@@ -83,7 +94,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: "[path][name].[ext]"
+                            name: "[path][name].[ext]?[hash]"
                         }
                     }
                 ]
@@ -104,7 +115,7 @@ module.exports = {
                         loader: 'svg-sprite-loader',
                         options: {
                             extract: true,
-                            spriteFilename: './img/symbols.svg'
+                            spriteFilename: './img/symbols.svg?[hash]'
                         }
                     },
                     'svgo-loader'
@@ -117,7 +128,7 @@ module.exports = {
                     {
                         loader: "url-loader",
                         options: {
-                            name: "[path][name].[ext]",
+                            name: "[path][name].[ext]?[hash]",
                             limit: 10000
                         }
                     },
@@ -147,7 +158,6 @@ module.exports = {
 
         new MiniCssExtractPlugin({
             filename: "style.min.css",
-            chunkFilename: "[id].min.css"
         }),
 
         new OptimizeCSSAssetsPlugin(),
